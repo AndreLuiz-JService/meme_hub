@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "527630827257",
+    "project_id": "memehub-d3b65",
+    "storage_bucket": "memehub-d3b65.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:527630827257:android:132dfdf7bbc41bfaa62c28",
+        "android_client_info": {
+          "package_name": "br.com.meme_hub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBmkctmCxAoFnIfAWhU9YCp3bbJ38Efko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
