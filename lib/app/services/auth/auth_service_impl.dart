@@ -41,4 +41,9 @@ class AuthServiceImpl implements AuthServiceInterface {
       rethrow;
     }
   }
+
+  @override
+  Future<void> logout() async {
+    await _authSettings.clearUserToken();
+  }
 }

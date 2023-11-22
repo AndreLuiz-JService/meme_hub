@@ -34,9 +34,10 @@ class _RegisterViewPageState extends State<RegisterViewPage> {
   final passwordController2 = TextEditingController();
 
   var maskFormatter = MaskTextInputFormatter(
-      mask: '0000-00-00',
-      filter: {"0": RegExp(r'[0-9]')},
-      type: MaskAutoCompletionType.lazy);
+    mask: '0000-00-00',
+    filter: {"0": RegExp(r'[0-9]')},
+    type: MaskAutoCompletionType.lazy,
+  );
 
   bool isObscure = true;
   setObscureText() {

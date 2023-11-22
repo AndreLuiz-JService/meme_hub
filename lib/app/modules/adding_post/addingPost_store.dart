@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, library_private_types_in_public_api
+
 import 'package:image_picker/image_picker.dart';
 import 'package:meme_hub/app/core/global/enum/enums.dart';
 import 'package:meme_hub/app/modules/adding_post/repositories/upload_post_repository.dart';

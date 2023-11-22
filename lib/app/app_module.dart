@@ -4,6 +4,8 @@ import 'package:meme_hub/app/core/store/auth_settings.dart';
 import 'package:meme_hub/app/modules/adding_post/addingPost_module.dart';
 import 'package:meme_hub/app/modules/core/core_module.dart';
 import 'package:meme_hub/app/modules/login/login_module.dart';
+import 'package:meme_hub/app/modules/profile/profile_detail/profileDetail_module.dart';
+import 'package:meme_hub/app/modules/profile/profile_module.dart';
 import 'package:meme_hub/app/modules/start_up/startUp_module.dart';
 import 'package:meme_hub/app/modules/template/base_layout.dart';
 import 'package:meme_hub/app/services/auth/auth_service_impl.dart';
@@ -54,7 +56,15 @@ class AppModule extends Module {
       ),
       children: [
         ModuleRoute('/home', module: HomeModule()),
+        ModuleRoute(
+          '/profile',
+          module: ProfileModule(),
+        ),
       ],
+    ),
+    ModuleRoute(
+      '/profileDetail',
+      module: ProfileDetailModule(),
     ),
     ModuleRoute(
       '/adding_post',

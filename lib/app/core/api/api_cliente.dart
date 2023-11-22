@@ -58,4 +58,16 @@ class ApiClient {
       rethrow;
     }
   }
+
+  Future<Response> put(String endpoint, Map<String, dynamic> body) async {
+    try {
+      return await dio.put(
+        endpoint,
+        data: body,
+      );
+    } catch (e) {
+      // Trate os erros conforme você define
+      rethrow;
+    }
+  }
 }

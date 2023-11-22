@@ -24,4 +24,24 @@ class PostServiceImpl implements PostServiceInterface {
       },
     );
   }
+
+  @override
+  Future<List<PostModel>> fetchPostsByUser(String userId) async {
+    final response = await _apiClient.get('/post/user/$userId', {});
+    final body = response.data as List<dynamic>;
+    return body.map((postData) => PostModel.fromMap(postData)).toList();
+  }
+
+  @override
+  Future<void> updatePostRating(String postId, bool value) async {
+    await _apiClient.post(
+      '/rating',
+      {
+        'PostId': postId,
+        "Value": value,
+      },
+    );
+  }
+
+  
 }

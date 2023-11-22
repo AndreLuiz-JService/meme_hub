@@ -21,6 +21,7 @@ abstract class _StartUpStoreBase with Store {
   Future<void> verifyUserToken() async {
     final response = await startUpRepository.validateUserToken();
     if (response) {
+      await startUpRepository.getCurrentUser();
       _homeStatus = PageStateStatus.success;
     } else {
       _homeStatus = PageStateStatus.failure;

@@ -37,7 +37,7 @@ class _BaseLayoutState extends State<BaseLayout> {
       ),
       NavItemInfo(
         iconPath: context.assets.bottomNavigatorIconAccount,
-        moduleRoute: '/main/account',
+        moduleRoute: '/main/profile',
       ),
     ];
 
@@ -101,7 +101,7 @@ class NavBarWidget extends StatelessWidget {
     return Expanded(
       child: Container(
         height: 60,
-        padding: const EdgeInsets.only( bottom: 8),
+        padding: const EdgeInsets.only(bottom: 8),
         child: Material(
           color: Colors.transparent,
           child: IconButton(

@@ -1,5 +1,6 @@
-import 'dart:io';
+// ignore_for_file: file_names
 
+import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';

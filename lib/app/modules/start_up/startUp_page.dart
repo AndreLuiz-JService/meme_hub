@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
