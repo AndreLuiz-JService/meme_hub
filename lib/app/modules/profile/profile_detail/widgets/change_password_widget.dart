@@ -14,6 +14,13 @@ class ChangePasswordWidget extends StatelessWidget {
           top: Radius.circular(10),
         ),
       ),
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 20,
+          )
+        ]
+      )
     );
   }
 }

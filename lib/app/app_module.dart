@@ -62,10 +62,7 @@ class AppModule extends Module {
         ),
       ],
     ),
-    ModuleRoute(
-      '/profileDetail',
-      module: ProfileDetailModule(),
-    ),
+    ModuleRoute('/profileDetail', module: ProfileDetailModule(),),
     ModuleRoute(
       '/adding_post',
       module: AddingPostModule(),
