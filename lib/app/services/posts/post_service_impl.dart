@@ -33,6 +33,13 @@ class PostServiceImpl implements PostServiceInterface {
   }
 
   @override
+  Future<List<PostModel>> fetchPostsUserLiked() async {
+    final response = await _apiClient.get('/post/current/likes', {});
+    final body = response.data as List<dynamic>;
+    return body.map((postData) => PostModel.fromMap(postData)).toList();
+  }
+
+  @override
   Future<void> updatePostRating(String postId, bool value) async {
     await _apiClient.post(
       '/rating',
@@ -42,6 +49,4 @@ class PostServiceImpl implements PostServiceInterface {
       },
     );
   }
-
-  
 }

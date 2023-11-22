@@ -1,4 +1,5 @@
 import 'package:meme_hub/app/core/global/enum/enums.dart';
+import 'package:meme_hub/app/models/auth/user_model.dart';
 import 'package:meme_hub/app/modules/profile/profile_detail/repositories/update_repository.dart';
 import 'package:meme_hub/app/modules/profile/profile_store.dart';
 import 'package:mobx/mobx.dart';
@@ -8,6 +9,7 @@ part 'profileDetail_store.g.dart';
 class ProfileDetailStore = _ProfileDetailStoreBase with _$ProfileDetailStore;
 
 abstract class _ProfileDetailStoreBase with Store {
+
   final UpdateRepository updateRepository;
   _ProfileDetailStoreBase(this.updateRepository);
 
@@ -27,6 +29,8 @@ abstract class _ProfileDetailStoreBase with Store {
 
   @readonly
   String? _errorMessage;
+
+  UserModel get user => updateRepository.user;
 
   Future<void> updateUser(
       {String? newPassWord,

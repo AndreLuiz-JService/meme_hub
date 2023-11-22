@@ -101,6 +101,22 @@ mixin _$ProfileStore on _ProfileStoreBase, Store {
     });
   }
 
+  late final _$likedPostsAtom =
+      Atom(name: '_ProfileStoreBase.likedPosts', context: context);
+
+  @override
+  List<PostModel> get likedPosts {
+    _$likedPostsAtom.reportRead();
+    return super.likedPosts;
+  }
+
+  @override
+  set likedPosts(List<PostModel> value) {
+    _$likedPostsAtom.reportWrite(value, super.likedPosts, () {
+      super.likedPosts = value;
+    });
+  }
+
   late final _$initClassAsyncAction =
       AsyncAction('_ProfileStoreBase.initClass', context: context);
 
@@ -123,6 +139,15 @@ mixin _$ProfileStore on _ProfileStoreBase, Store {
   @override
   Future<void> fetchUserPosts(String? id) {
     return _$fetchUserPostsAsyncAction.run(() => super.fetchUserPosts(id));
+  }
+
+  late final _$fetchUserLikedPostsAsyncAction =
+      AsyncAction('_ProfileStoreBase.fetchUserLikedPosts', context: context);
+
+  @override
+  Future<void> fetchUserLikedPosts() {
+    return _$fetchUserLikedPostsAsyncAction
+        .run(() => super.fetchUserLikedPosts());
   }
 
   late final _$logoutAsyncAction =
@@ -153,6 +178,7 @@ mixin _$ProfileStore on _ProfileStoreBase, Store {
 pageState: ${pageState},
 user: ${user},
 posts: ${posts},
+likedPosts: ${likedPosts},
 loginInLoading: ${loginInLoading}
     ''';
   }

@@ -21,6 +21,11 @@ class RepositoryProfile {
     return posts;
   }
 
+  Future<List<PostModel>> fetchUserLikedPosts() async {
+    final posts = await postService.fetchPostsUserLiked();
+    return posts;
+  }
+
   Future<void> logout() async {
     await authService.logout();
   }

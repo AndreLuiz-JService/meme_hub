@@ -208,7 +208,7 @@ class ProfilePageState extends State<ProfilePage> with Messages {
                                   },
                                   isSelect: store.pageState == PageState.Likes,
                                   borderLeft: true,
-                                  quantity: 100,
+                                  quantity: store.likedPosts.length,
                                   title: 'Likes',
                                 ),
                               ),
@@ -226,9 +226,13 @@ class ProfilePageState extends State<ProfilePage> with Messages {
                               crossAxisCount: 2,
                               mainAxisSpacing: 8,
                             ),
-                            itemCount: store.posts.length,
+                            itemCount: store.pageState == PageState.Post
+                                ? store.posts.length
+                                : store.likedPosts.length,
                             itemBuilder: (context, index) {
-                              final post = store.posts[index];
+                              final post = store.pageState == PageState.Post
+                                  ? store.posts[index]
+                                  : store.likedPosts[index];
                               return Container(
                                 width: context.screenWidth / 2,
                                 height: 64,

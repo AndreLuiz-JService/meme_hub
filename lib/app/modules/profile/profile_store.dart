@@ -39,10 +39,12 @@ abstract class _ProfileStoreBase with Store {
     try {
       await fetchUserById(userId);
       await fetchUserPosts(userId);
+      await fetchUserLikedPosts();
       _profileStatus = PageStateStatus.success;
     } catch (e) {
       _profileStatus = PageStateStatus.failure;
       _errorMessage = e.toString();
+      rethrow;
     }
   }
 
@@ -60,6 +62,13 @@ abstract class _ProfileStoreBase with Store {
   @action
   Future<void> fetchUserPosts(String? id) async {
     posts = await repositoryProfile.fetchUserPosts(id);
+  }
+
+  @observable
+  List<PostModel> likedPosts = [];
+  @action
+  Future<void> fetchUserLikedPosts() async {
+    likedPosts = await repositoryProfile.fetchUserLikedPosts();
   }
 
   @action

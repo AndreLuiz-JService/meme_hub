@@ -98,9 +98,9 @@ class PostModel {
       title: map['title'] as String,
       imageUrl: map['imageUrl'] as String,
       ownerUsername: map['ownerUsername'] as String,
-      ratingLike: map['ratingLike'] as int,
-      ratingDislike: map['ratingDislike'] as int,
-      commentCount: map['commentCount'] as int,
+      ratingLike: map['ratingLike'] as int? ?? 0,
+      ratingDislike: map['ratingDislike'] as int? ?? 0,
+      commentCount: map['commentCount'] as int? ?? 0,
       createdBy: map['createdBy'] as String,
       createdOn: DateTime.parse(map['createdOn'] as String).toLocal(),
     );

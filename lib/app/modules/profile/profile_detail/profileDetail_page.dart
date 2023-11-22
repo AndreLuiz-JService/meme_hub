@@ -1,3 +1,4 @@
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -6,19 +7,22 @@ import 'package:meme_hub/app/core/ui/atons/text_field/custom_text_field.dart';
 import 'package:meme_hub/app/core/ui/atons/typography/custom_text.dart';
 import 'package:meme_hub/app/core/ui/atons/typography/typography.dart';
 import 'package:meme_hub/app/core/ui/styles/colors_app.dart';
+import 'package:meme_hub/app/helpers/show_modais.dart';
 import 'package:meme_hub/app/modules/profile/profile_detail/profileDetail_store.dart';
 import 'package:flutter/material.dart';
+import 'package:meme_hub/app/modules/profile/profile_detail/widgets/change_password_widget.dart';
 import 'package:validatorless/validatorless.dart';
 
 class ProfileDetailPage extends StatefulWidget {
   const ProfileDetailPage({
     Key? key,
   }) : super(key: key);
+
   @override
   ProfileDetailPageState createState() => ProfileDetailPageState();
 }
 
-class ProfileDetailPageState extends State<ProfileDetailPage> {
+class ProfileDetailPageState extends State<ProfileDetailPage> with ShowModais {
   final ProfileDetailStore store = Modular.get();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final birthdayController = TextEditingController();
@@ -54,12 +58,12 @@ class ProfileDetailPageState extends State<ProfileDetailPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(
+                        SizedBox(
                           width: 40,
                           height: 40,
                           child: IconButton(
-                              onPressed: null,
-                              icon: Icon(
+                              onPressed: () => Modular.to.pop(),
+                              icon: const Icon(
                                 Icons.arrow_back_rounded,
                               )),
                         ),
@@ -126,7 +130,7 @@ class ProfileDetailPageState extends State<ProfileDetailPage> {
                         enable: store.profileDetailInLoading ? false : true,
                         inputFormatters: [maskFormatter],
                         labelText: 'Sua data de nascimento',
-                        hintText: '2002/26/01',
+                        hintText: store.user.birthdayFormated,
                         keyboardType: TextInputType.number,
                         validation: (value) {
                           if (value == null || value.isEmpty) {
@@ -146,7 +150,7 @@ class ProfileDetailPageState extends State<ProfileDetailPage> {
                         controller: emailController,
                         enable: store.profileDetailInLoading ? false : true,
                         labelText: 'Seu e-mail',
-                        hintText: 'Exemplo@email.com',
+                        hintText: store.user.email,
                         validation: (value) {
                           if (value == null || value.isEmpty) {
                             return null;
@@ -165,7 +169,7 @@ class ProfileDetailPageState extends State<ProfileDetailPage> {
                         controller: usernameController,
                         enable: store.profileDetailInLoading ? false : true,
                         labelText: 'Seu nome de usuário',
-                        hintText: 'Usuario 1',
+                        hintText: store.user.username,
                         prefixIcon: SvgPicture.asset('assets/svg/email.svg'),
                       ),
                     ),
@@ -174,9 +178,10 @@ class ProfileDetailPageState extends State<ProfileDetailPage> {
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: const Column(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.only(left: 16),
                             child: CustomText(
                               textType: TypographyType.smBold,
@@ -184,7 +189,51 @@ class ProfileDetailPageState extends State<ProfileDetailPage> {
                               color: fontColor,
                             ),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
+                          GestureDetector(
+                            onTap: () {
+                              showModalBottom(ChangePasswordWidget(
+                                  onSubmit: setNewPassWord));
+                            },
+                            child: Container(
+                              height: 45,
+                              decoration: BoxDecoration(
+                                color: grey,
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 13, right: 16),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: 24,
+                                      height: 24,
+                                      child: SvgPicture.asset(
+                                        'assets/svg/lock.svg',
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    const CustomText(
+                                      textType: TypographyType.smRegular,
+                                      text: 'Alterar minha senha',
+                                    ),
+                                    const Spacer(),
+                                    const SizedBox(
+                                      width: 24,
+                                      height: 24,
+                                      child: Icon(
+                                        Icons.arrow_forward_rounded,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     )
@@ -194,21 +243,25 @@ class ProfileDetailPageState extends State<ProfileDetailPage> {
               const SizedBox(
                 height: 24,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: CustomButton.primary(
-                  text: 'SALVAR',
-                  onTap: () {
-                    if (_formKey.currentState!.validate()) {
-                      store.updateUser(
-                        username: usernameController.text,
-                        birthday: birthdayController.text,
-                        email: emailController.text,
-                        newPassWord: newPassWord,
-                      );
-                    }
-                  },
-                ),
+              Observer(
+                builder: (context) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: CustomButton.primary(
+                      text: 'SALVAR',
+                      onTap: () {
+                        if (_formKey.currentState!.validate()) {
+                          store.updateUser(
+                            username: usernameController.text,
+                            birthday: birthdayController.text,
+                            email: emailController.text,
+                            newPassWord: newPassWord,
+                          );
+                        }
+                      },
+                    ),
+                  );
+                }
               ),
               const SizedBox(
                 height: 16,
